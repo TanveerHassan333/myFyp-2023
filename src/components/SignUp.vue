@@ -28,14 +28,14 @@
       </form>
     </div>
    </div>
-    <p v-if="emailVerificationMessage">{{ emailVerificationMessage }}</p>
+    <p class="verify-msg" v-if="emailVerificationMessage">{{ emailVerificationMessage }}</p>
     <p v-if="registrationSuccess">Account created successfully. Please proceed to login.</p>
   </div>
 </template>
 
 <script setup>
 import { useAuthStore } from '../stores/auth';
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
@@ -63,11 +63,17 @@ lastName.value = ''
 email.value = ''
 password.value = ''
 userType.value = ''
-  if (authStore.registrationSuccess) {
-    registrationSuccess.value = true;
-    await router.push('/user/login');
+if (authStore.registrationSuccess) {
+    emailVerificationMessage.value = authStore.emailVerificationMessage;
+    await authStore.checkEmailVerification();
+
+    if (authStore.isLoggedIn) {
+      // User has verified the email, proceed to login
+      await router.push('/user/login');
+    }
   }
 };
+
 </script>
 
 <style scoped>
@@ -147,5 +153,14 @@ form input::placeholder{
 }
 .router:hover{
   color: #f3c10e;
+}
+.verify-msg{
+  position: absolute;
+  top: 10rem;
+  left: 50%;
+  background-color: rgba(121, 252, 121, 0.562)yellow;
+  border-radius: 0.7rem;
+  padding: 0.3rem;
+  color: white;
 }
 </style>

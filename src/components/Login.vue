@@ -14,6 +14,7 @@
         </form>
         <p class="create-account">Do You have an account? <RouterLink to="/account/register">Create One</RouterLink></p>
         <p class="create-account mt-3"><RouterLink to="/user/forgotPassword">Forgot Password?</RouterLink></p>
+        <p>{{ loginStatusMessage }}</p>
         </div>
       </div>
       
@@ -25,7 +26,7 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue';
+  import { ref, computed, onMounted } from 'vue';
   import { useLoginStore } from '../stores/login';
   import { useRouter } from 'vue-router';
   
@@ -51,7 +52,14 @@
       errorMessage.value = loginStore.errorMessage;
     }
   };
-  
+  const loginStatusMessage = computed(() => {
+  return loginStore.isLoggedIn ? 'You are already logged in.' : '';
+});
+onMounted(() => {
+  setTimeout(() => {
+    router.push('/');
+  }, 10000);
+});
   </script>
   
   <style>
@@ -107,6 +115,12 @@
     font-weight: 500;
     margin-left: 3rem;
     margin-top: -2rem;
+  }
+  .error{
+    position: absolute;
+    top: 22rem;
+    left: 50%;
+    color: red;
   }
   </style>
   

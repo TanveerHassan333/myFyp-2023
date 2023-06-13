@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { app } from '../firebase/init'; // Assuming you have a separate file for Firebase initialization
 
 const auth = getAuth(app);
@@ -10,6 +10,7 @@ export const useLoginStore = defineStore({
     email: '',
     password: '',
     errorMessage: '',
+    isLoggedIn: false, 
   }),
   actions: {
     async loginUser(router) {
@@ -31,6 +32,17 @@ export const useLoginStore = defineStore({
             break;
         }
       }
+    },
+    async checkLoginStatus() {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is logged in
+          this.isLoggedIn = true;
+        } else {
+          // User is logged out
+          this.isLoggedIn = false;
+        }
+      });
     },
   },
 });

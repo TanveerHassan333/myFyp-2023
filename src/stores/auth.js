@@ -46,5 +46,16 @@ export const useAuthStore = defineStore({
         // Handle error or update state accordingly
       }
     },
+    async checkEmailVerification() {
+      const user = auth.currentUser;
+      if (user) {
+        const isVerified = user.emailVerified;
+        if (!isVerified) {
+          this.isLoggedIn = false;
+          this.emailVerificationMessage =
+            'Please verify your email before logging in.';
+        }
+      }
+    },
   },
 });
