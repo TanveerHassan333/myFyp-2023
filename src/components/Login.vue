@@ -13,6 +13,7 @@
           <button class="account-btn" type="submit">Login</button>
         </form>
         <p class="create-account">Do You have an account? <RouterLink to="/account/register">Create One</RouterLink></p>
+        <p class="create-account mt-3"><RouterLink to="/user/forgotPassword">Forgot Password?</RouterLink></p>
         </div>
       </div>
       

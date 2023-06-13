@@ -16,8 +16,16 @@ const router = createRouter({
       component: () => import("../components/Login.vue"),
     },
     {
+      path: "/user/profile",
+      component: () => import("../components/UserProfile.vue"),
+    },
+    {
       path: "/user/pro/dashboard",
       component: () => import("../components/UserDasboard.vue"),
+    },
+    {
+      path: "/user/dashboard",
+      component: () => import("../components/DashboardOne.vue"),
     },
     {
       path: "/user/forgotPassword",

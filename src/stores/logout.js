@@ -1,35 +1,22 @@
-import { defineStore } from 'pinia';
-import { getAuth } from 'firebase/auth'; 
-const auth = getAuth()
+import { defineStore } from 'pinia'
+import { auth } from '../firebase/init'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: null,
+    user: null
   }),
   getters: {
-    isLoggedIn: (state) => state.user !== null,
+    isAuthenticated: (state) => !!state.user
   },
   actions: {
     setUser(user) {
-      this.user = user;
+      this.user = user
     },
-    async login(email, password) {
-      try {
-        const { user } = await auth.signInWithEmailAndPassword(email, password);
-        this.setUser(user);
-      } catch (error) {
-        // Handle login error
-        console.error(error);
+    async logoutUser() {
+      if (this.isAuthenticated) {
+        await auth.signOut()
+        this.user = null
       }
-    },
-    async logout() {
-      try {
-        await auth.signOut();
-        this.setUser(null);
-      } catch (error) {
-        // Handle logout error
-        console.error(error);
-      }
-    },
-  },
-});
+    }
+  }
+})

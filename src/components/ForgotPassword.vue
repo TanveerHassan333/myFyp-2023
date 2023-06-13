@@ -18,15 +18,21 @@
   <script setup>
   import { ref } from 'vue';
   import { useAuthStore } from '../stores/auth';
+  import { useRouter } from 'vue-router';
   
   const email = ref('');
   const forgotPasswordMessage = ref('');
   const authStore = useAuthStore()
+  const router = useRouter()
   
   const handleForgotPassword = async () => {
     try {
       await authStore.forgotPassword(email.value);
       forgotPasswordMessage.value = 'Password reset email sent successfully.';
+      setTimeout(() => {
+        router.push('/user/login')
+    }, 5000); // Redirect to login page after 5 seconds
+      
     } catch (error) {
       forgotPasswordMessage.value = 'Error sending password reset email.';
       console.error('Error sending password reset email:', error);

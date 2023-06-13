@@ -6,7 +6,7 @@
             </div>
             <div class="col-lg-6">
             <router-link to="/shareBlog"><button class="share-blog">Share Blog</button></router-link>
-            <button @click="logout" v-if="isLoggedIn" class="log-out">Log Out</button>
+            <button v-if="isAuthenticated" @click="logout" class="log-out">Log Out</button>
             </div>
         </div>
     </div>
@@ -30,10 +30,11 @@
 </template>
 <script>
 import {RouterLink} from 'vue-router';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted , computed} from 'vue';
 import { db } from '../firebase/init'; // Import the Firebase configuration
 import {  collection, getDocs } from 'firebase/firestore'
 import { useAuthStore } from '../stores/logout';
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'BlogList',
@@ -41,11 +42,12 @@ export default {
     const blogs = ref([]);
     const expandedBlogIds = ref([]);
     const authStore = useAuthStore();
+    const router = useRouter()
 
-    const logout = () => {
-      authStore.logout();
-    };
-
+    const logout = async () => {
+  await authStore.logoutUser()
+  router.push('/user/login')
+}
     // Fetch blogs from Firestore
     const fetchBlogs = async () => {
       const querySnapshot = await getDocs(collection(db, 'blogs'));
@@ -86,6 +88,7 @@ const truncatedText = (text) => {
   }
   return text.slice(0, maxChars) + '...';
 };
+
     return {
       blogs,
       expandedBlogIds,
@@ -93,10 +96,11 @@ const truncatedText = (text) => {
       expandBlog,
       collapseBlog,
       truncatedText,
-      isLoggedIn: authStore.isLoggedIn,
-      logout,
+      isAuthenticated: authStore.isAuthenticated,
+      logout
     };
   },
+ 
 };
 </script>
 

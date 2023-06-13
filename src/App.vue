@@ -1,6 +1,6 @@
 <template>
-  <div class="container"> 
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container navbar-container"> 
+ <nav class="navbar menus navbar-expand-lg navbar-light">
       <RouterLink to="/"><a class="navbar-brand" ><img src="../src/assets/images/logo.png" alt="logo"></a></RouterLink>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -19,6 +19,16 @@
           <li class="nav-item ms-lg-4">
             <RouterLink to="/account/register"><a class="nav-link menu" href="#">Register/Login</a></RouterLink>
           </li>
+          <li class="nav-item ms-lg-4">
+            <RouterLink to="/user/profile">
+              <div v-if="profile.profilePicture">
+                <img :src="profile.profilePicture" alt="Profile Picture" />
+              </div>
+              <div v-else>
+                <i class="bi bi-person" @click="openProfileForm"></i>
+              </div>
+            </RouterLink>
+          </li>
         </ul>
       </div>
     </nav>
@@ -26,8 +36,25 @@
   <RouterView></RouterView>
   </template>  
 
-  <script setup>
+  <script>
   import {RouterLink, RouterView} from 'vue-router'
+  import { useUserStore } from './stores/user';
+
+export default {
+  setup() {
+    const userStore = useUserStore();
+    const profile = userStore.profile;
+
+    const openProfileForm = () => {
+      // Logic to open the profile form component
+    };
+
+    return {
+      profile,
+      openProfileForm,
+    };
+  },
+};
 </script>
 
 
@@ -40,10 +67,10 @@
 html{
   font-size: 15px;
 }
-.container{
+.navbar-container{
   margin: 0 auto;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
 }
+
 a:link, a:visited, a:hover, a:active{
   text-decoration: none;
 }
@@ -53,5 +80,12 @@ a:link, a:visited, a:hover, a:active{
   font-weight: 600;
   font-style: none;
   font-size: 1.1rem;
+}
+.bi-person{
+  font-size: 1.5rem;
+  color: gray;
+  border: 1px solid lightgray;
+  border-radius: 100%;
+  width: 50%;
 }
 </style>
