@@ -1,6 +1,8 @@
-# auth-practice
+# Fyp-Konnect Professional
+Basic Intro:
+Konnect professionals is a platform where everyone especially women can connect with each other. Especially for professional or entrepreneurs and women entrepreneur to help the new or young women specially student to guide them related to business or professional world. The women of any field can join this platform to help and train and guide each other and even for job seeker women’s or for counseling or learning.  The konnect Professional is a platform for to empower the youth for their professional life and to make them prepare for future challenges.
+There they will meet different categories of professionals like IT related, business, and other professionals having different experiences in different fields. 
 
-This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
