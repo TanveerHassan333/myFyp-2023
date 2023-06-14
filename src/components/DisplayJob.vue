@@ -2,10 +2,10 @@
     <div class="container jobs">
       <h2>Recent Jobs Posted</h2>
       <div class="row">
-        <div class="col-md-6 col-lg-4 mt-3" v-for="job in jobs" :key="job.id">
+        <div class="col-md-6 col-lg-4 mt-3" v-for="job in jobs" :key="job.id" @click="openJobDetails(job.id)">
           <div class="card mb-4 ms-3 p-2">
             <div class="card-body">
-              <h3 class="card-title">{{ job.jobName }}</h3>
+             <h3 class="card-title">{{ job.jobName }}</h3>
               <p class="card-text"><strong>Description:</strong>{{ job.description }}</p>
               <p class="card-text"><strong>Requirements:</strong> {{ job.requirements }}</p>
               <p class="card-text"><strong>Responsibilities:</strong> {{ job.responsibilities }}</p>
@@ -20,8 +20,10 @@
   import { useJobStore } from '../stores/jobsStore'
   import { onMounted, ref } from 'vue'
   import 'bootstrap/dist/css/bootstrap.css';
+  import { useRouter } from 'vue-router'
   
   const jobStore = useJobStore()
+  const router = useRouter()
   
   // Define a reactive ref for jobs
   const jobs = ref([])
@@ -32,6 +34,10 @@
     // Update the reactive jobs ref with the fetched data
     jobs.value = jobStore.getJobs
   })
+  // Open job details when a card is clicked
+function openJobDetails(jobId) {
+  router.push(`/user/job/${jobId}`)
+}
   
   </script>
 

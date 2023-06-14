@@ -49,6 +49,10 @@ const router = createRouter({
       component: () => import("../components/DisplayJob.vue"),
     },
     {
+      path: "/user/job/:jobId",
+      component: () => import("../components/DisplaySingleJob.vue"),
+    },
+    {
       path: "/blogs/showBlog/:id",
       name: 'showBlog',
       props: true,
