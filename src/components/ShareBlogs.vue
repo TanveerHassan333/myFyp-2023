@@ -59,7 +59,6 @@ const editorOptions = {
         console.log(blogData.content[0])
 
         const docRef = await addDoc(collection(db, 'blogs'),blogData);
-        // console.log('Document written with ID: ', docRef.id);
         this.blogData = ''
         this.showSuccessMessage = true;
         this.editorContent = ''; // Clear the editor content after submission

@@ -102,6 +102,8 @@ html{
 }
 .report-container{
   box-shadow: none;
+  width: 80%;
+  margin: 0 auto;
 }
 .report-container h4{
   font-size: 1.2rem;

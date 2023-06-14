@@ -8,8 +8,13 @@
           <img src="../assets/images/logo.JPG" class="logo img-fluid" alt="logo image">
           <h4>Login To Continue...!</h4>
           <form @submit.prevent="loginUser">
-            <input type="email" id="email" v-model="email" required placeholder="Enter Your Email"> <br>
-            <input type="password" id="password" v-model="password" required placeholder="Enter Your Password"> <br>
+            <input type="email" id="email" v-model="email" required placeholder="Enter Your Email">
+            
+             <br>
+            <input id="password" :type="showPassword ? 'text' : 'password'" v-model="password" required placeholder="Enter Your Password"> 
+            <i class="icon bi" :class="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
+            @click="togglePasswordVisibility"></i>
+            <br>
           <button class="account-btn" type="submit">Login</button>
         </form>
         <p class="create-account">Do You have an account? <RouterLink to="/account/register">Create One</RouterLink></p>
@@ -26,7 +31,7 @@
   </template>
   
   <script setup>
-  import { ref, computed, onMounted } from 'vue';
+  import { ref, computed } from 'vue';
   import { useLoginStore } from '../stores/login';
   import { useRouter } from 'vue-router';
   
@@ -37,6 +42,11 @@
   const password = ref('');
   const errorMessage = ref('');
   const showSuccessPopup = ref(false);
+  const showPassword = ref(false);
+
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value;
+};
   
   const loginUser = async () => {
     loginStore.email = email.value;
@@ -47,7 +57,7 @@
       showSuccessPopup.value = true;
       setTimeout(() => {
         showSuccessPopup.value = false;
-      }, 4000); // 4 seconds
+      }, 9000); // 4 seconds
     } else {
       errorMessage.value = loginStore.errorMessage;
     }
@@ -55,11 +65,11 @@
   const loginStatusMessage = computed(() => {
   return loginStore.isLoggedIn ? 'You are already logged in.' : '';
 });
-onMounted(() => {
-  setTimeout(() => {
-    router.push('/');
-  }, 10000);
-});
+// onMounted(() => {
+//   setTimeout(() => {
+//     router.push('/');
+//   }, 10000);
+// });
   </script>
   
   <style>
@@ -121,6 +131,13 @@ onMounted(() => {
     top: 22rem;
     left: 50%;
     color: red;
+  }
+  .bi-eye-fill, .bi-eye-slash-fill{
+    position: absolute;
+    top: 18.7rem;
+    right: 13.5rem;
+    font-size: 1.3rem;
+    cursor: pointer;
   }
   </style>
   

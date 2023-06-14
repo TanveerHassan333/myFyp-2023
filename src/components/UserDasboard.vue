@@ -5,6 +5,7 @@
                 <h2>My Dashboard</h2>
             </div>
             <div class="col-lg-6">
+              <router-link to="/user/professional/sharejob"><button class="share-job">Share Job</button></router-link>
             <router-link to="/shareBlog"><button class="share-blog">Share Blog</button></router-link>
             <button v-if="isAuthenticated" @click="logout" class="log-out">Log Out</button>
             </div>
@@ -121,6 +122,15 @@ html{
     font-size: 1.4rem;
     font-weight: 700;
     color: #333;
+}
+.share-job{
+  background-color: #FFDC5F;
+    padding: 0.5rem 2rem;
+    border: none;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 1.5rem;
+    margin-left: 4rem;
 }
 .share-blog{
     background-color: #FFDC5F;

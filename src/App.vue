@@ -11,13 +11,22 @@
             <RouterLink to="/"><a class="nav-link menu" href="#">Home</a></RouterLink>
           </li>
           <li class="nav-item ms-lg-4">
-            <RouterLink to="/blogs/allBlogs"><a class="nav-link menu" href="#">Blogs</a></RouterLink>
-          </li>
-          <li class="nav-item ms-lg-4">
             <RouterLink to="/about"><a class="nav-link menu" href="#">About</a></RouterLink>
           </li>
           <li class="nav-item ms-lg-4">
-            <RouterLink to="/account/register"><a class="nav-link menu" href="#">Register/Login</a></RouterLink>
+            <RouterLink to="/blogs/allBlogs"><a class="nav-link menu" href="#">Blogs</a></RouterLink>
+          </li>
+          <li class="nav-item ms-lg-4">
+            <RouterLink to="/user/displayjob"><a class="nav-link menu" href="#">Jobs</a></RouterLink>
+          </li>
+          
+          <li class="nav-item ms-lg-4">
+            <template v-if="logOutStore.isAuthenticated">
+              <button class="nav-link menu" @click="logout">Logout</button>
+            </template>
+            <template v-else>
+              <RouterLink to="/account/register"><a class="nav-link menu" href="#">Sign Up/Login</a></RouterLink>
+            </template>
           </li>
           <li class="nav-item ms-lg-4">
             <RouterLink to="/user/profile">
@@ -37,21 +46,38 @@
   </template>  
 
   <script>
+  import { ref, onMounted } from 'vue'
   import {RouterLink, RouterView} from 'vue-router'
   import { useUserStore } from './stores/user';
+  import { userLogoutStore } from './stores/userAuth'
 
 export default {
   setup() {
     const userStore = useUserStore();
     const profile = userStore.profile;
+    const logOutStore = userLogoutStore()
+    const isAuthenticated= ref(false)
 
+    if (typeof logOutStore.initialize === 'function') {
+      logOutStore.initialize();
+    }
     const openProfileForm = () => {
       // Logic to open the profile form component
     };
+    const logout = () => {
+      logOutStore.logout();
+    };
+
+    onMounted(() => {
+      isAuthenticated.value = logOutStore.isAuthenticated;
+    });
 
     return {
       profile,
       openProfileForm,
+      logOutStore,
+      isAuthenticated,
+      logout
     };
   },
 };

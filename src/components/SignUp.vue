@@ -11,8 +11,9 @@
           <input type="text" id="firstName"  v-model="firstName" required placeholder="Enter your First name">
           <input type="text" id="lastName" v-model="lastName" required placeholder="Enter your Last name">
           <input type="email" id="email" v-model="email" required placeholder="Enter your Email">
-          <input type="password" id="password" v-model="password" required placeholder="Enter your Password">
-        
+          <input :type="showPassword ? 'text' : 'password'"  id="password" v-model="password" required placeholder="Enter your Password">
+          <i class="icon bi" :class="showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'"
+            @click="togglePasswordVisibility"></i>
           <select class="user-type" id="userType" v-model="userType">
             <option value="professional">Professional</option>
             <option value="learner">Learner</option>
@@ -35,7 +36,7 @@
 
 <script setup>
 import { useAuthStore } from '../stores/auth';
-import { ref, onMounted, computed } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore();
@@ -49,6 +50,11 @@ const userType = ref('professional');
 
 const emailVerificationMessage = ref('');
 const registrationSuccess = ref(false);
+const showPassword = ref(false);
+
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value;
+};
 
 const register = async () => {
   await authStore.registerUser({
@@ -118,6 +124,13 @@ form input:focus {
 form input::placeholder{
   color: gray;
   font-size: 0.95rem;
+}
+.bi-eye-fill, .bi-eye-slash-fill{
+  position: absolute;
+  top: 26rem;
+  right: 13.5rem;
+  font-size: 1.3rem;
+  cursor: pointer;
 }
 .user-type{
   width: 80%;

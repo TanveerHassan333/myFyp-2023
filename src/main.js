@@ -5,7 +5,6 @@ import 'bootstrap/dist/js/bootstrap.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-// import { useAuthStore } from '../src/stores/logout';
 import App from './App.vue'
 import router from './routers'
 const app = createApp(App)

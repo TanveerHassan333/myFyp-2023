@@ -5,6 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: "/",
+      name: 'Home',
       component: () => import("../components/Home.vue"),
     },
     {
@@ -38,6 +39,14 @@ const router = createRouter({
     {
       path: "/shareBlog",
       component: () => import("../components/ShareBlogs.vue"),
+    },
+    {
+      path: "/user/professional/sharejob",
+      component: () => import("../components/ShareJob.vue"),
+    },
+    {
+      path: "/user/displayjob",
+      component: () => import("../components/DisplayJob.vue"),
     },
     {
       path: "/blogs/showBlog/:id",
