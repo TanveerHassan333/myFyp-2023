@@ -2,12 +2,12 @@
     <div class="container job-details">
       <h2>Job Details</h2>
       <div class="mt-4">
-        <h3>Name:{{ job.jobName }}</h3>
-        <p><strong>Description:</strong>{{ job.description }}</p>
+        <h3>Name: {{ job.jobName }}</h3>
+        <p><strong>Description:</strong> {{ job.description }}</p>
         <p><strong>Requirements:</strong> {{ job.requirements }}</p>
         <p><strong>Responsibilities:</strong> {{ job.responsibilities }}</p>
       </div>
-      
+
     </div>
   </template>
   

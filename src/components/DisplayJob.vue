@@ -9,6 +9,7 @@
               <p class="card-text"><strong>Description:</strong>{{ job.description }}</p>
               <p class="card-text"><strong>Requirements:</strong> {{ job.requirements }}</p>
               <p class="card-text"><strong>Responsibilities:</strong> {{ job.responsibilities }}</p>
+              <p class="card-text text-muted">{{ formatDate() }}</p>
             </div>
           </div>
         </div>
@@ -19,8 +20,8 @@
   <script setup>
   import { useJobStore } from '../stores/jobsStore'
   import { onMounted, ref } from 'vue'
-  import 'bootstrap/dist/css/bootstrap.css';
   import { useRouter } from 'vue-router'
+  import { Timestamp } from 'firebase/firestore'
   
   const jobStore = useJobStore()
   const router = useRouter()
@@ -38,7 +39,22 @@
 function openJobDetails(jobId) {
   router.push(`/user/job/${jobId}`)
 }
-  
+// Format the posting date
+function formatDate(date) {
+  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+
+  if (date instanceof Date) {
+    return date.toLocaleDateString(undefined, options);
+  }
+
+  if (date instanceof Timestamp) {
+    const milliseconds = date.toMillis();
+    return new Date(milliseconds).toLocaleDateString(undefined, options);
+  }
+
+  return '';
+}
+
   </script>
 
   <style scoped>
